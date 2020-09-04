@@ -38,6 +38,8 @@ you can then see the results in TensorBoard  using
 See documents for Tensorboard scalars included or check the driver scalars in the Tensorboard Webpage
 
 
-
+# Credits
+This Project uses models from Unity's tanks tutorial 
+The final prefabs have been modefied but the base credit for the models them self belongs to the original creator 
 
 
