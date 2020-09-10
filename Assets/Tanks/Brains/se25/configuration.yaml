@@ -1,0 +1,217 @@
+default_settings:
+  trainer_type: ppo
+  hyperparameters:
+    batch_size: 2048
+    buffer_size: 20480
+    learning_rate: 0.0003
+    beta: 0.005
+    epsilon: 0.2
+    lambd: 0.95
+    num_epoch: 3
+    learning_rate_schedule: constant
+  network_settings:
+    normalize: true
+    hidden_units: 256
+    num_layers: 2
+    vis_encode_type: simple
+    memory: null
+  reward_signals:
+    extrinsic:
+      gamma: 0.99
+      strength: 1.0
+    curiosity:
+      gamma: 0.99
+      strength: 0.02
+      encoding_size: 256
+      learning_rate: 0.0003
+  init_path: null
+  keep_checkpoints: 5
+  checkpoint_interval: 500000
+  max_steps: 50000000
+  time_horizon: 1000
+  summary_freq: 2000
+  threaded: true
+  self_play: null
+  behavioral_cloning: null
+  framework: tensorflow
+behaviors:
+  YTDriver2:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 2048
+      buffer_size: 20480
+      learning_rate: 0.0003
+      beta: 0.005
+      epsilon: 0.2
+      lambd: 0.95
+      num_epoch: 3
+      learning_rate_schedule: constant
+    network_settings:
+      normalize: true
+      hidden_units: 64
+      num_layers: 2
+      vis_encode_type: simple
+      memory: null
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+      curiosity:
+        gamma: 0.99
+        strength: 0.02
+        encoding_size: 256
+        learning_rate: 0.0003
+    init_path: null
+    keep_checkpoints: 5
+    checkpoint_interval: 500000
+    max_steps: 50000000
+    time_horizon: 1000
+    summary_freq: 2000
+    threaded: true
+    self_play: null
+    behavioral_cloning: null
+    framework: tensorflow
+  YTDriver3:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 2048
+      buffer_size: 20480
+      learning_rate: 0.0003
+      beta: 0.005
+      epsilon: 0.2
+      lambd: 0.95
+      num_epoch: 3
+      learning_rate_schedule: constant
+    network_settings:
+      normalize: true
+      hidden_units: 256
+      num_layers: 1
+      vis_encode_type: simple
+      memory: null
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+      curiosity:
+        gamma: 0.99
+        strength: 0.02
+        encoding_size: 256
+        learning_rate: 0.0003
+    init_path: null
+    keep_checkpoints: 5
+    checkpoint_interval: 500000
+    max_steps: 50000000
+    time_horizon: 1000
+    summary_freq: 2000
+    threaded: true
+    self_play: null
+    behavioral_cloning: null
+    framework: tensorflow
+  YTDriver4:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 2048
+      buffer_size: 20480
+      learning_rate: 0.0003
+      beta: 0.005
+      epsilon: 0.2
+      lambd: 0.95
+      num_epoch: 3
+      learning_rate_schedule: constant
+    network_settings:
+      normalize: true
+      hidden_units: 128
+      num_layers: 2
+      vis_encode_type: simple
+      memory: null
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+      curiosity:
+        gamma: 0.99
+        strength: 0.02
+        encoding_size: 256
+        learning_rate: 0.0003
+    init_path: null
+    keep_checkpoints: 5
+    checkpoint_interval: 500000
+    max_steps: 50000000
+    time_horizon: 1000
+    summary_freq: 2000
+    threaded: true
+    self_play: null
+    behavioral_cloning: null
+    framework: tensorflow
+env_settings:
+  env_path: null
+  env_args: null
+  base_port: 5005
+  num_envs: 1
+  seed: -1
+engine_settings:
+  width: 84
+  height: 84
+  quality_level: 5
+  time_scale: 20
+  target_frame_rate: -1
+  capture_frame_rate: 60
+  no_graphics: false
+environment_parameters:
+  level:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 2875
+          value: 0.0
+      name: Level0
+      completion_criteria:
+        behavior: STurret1
+        measure: reward
+        min_lesson_length: 100
+        signal_smoothing: true
+        threshold: 0.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 2876
+          value: 1.0
+      name: Level1
+      completion_criteria:
+        behavior: STurret1
+        measure: reward
+        min_lesson_length: 100
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 2877
+          value: 2.0
+      name: Level2# The '-' is important as this is a list
+      completion_criteria:
+        behavior: STurret1
+        measure: reward
+        min_lesson_length: 100
+        signal_smoothing: true
+        threshold: 31.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 2878
+          value: 3.0
+      name: Level3
+      completion_criteria: null
+checkpoint_settings:
+  run_id: se25
+  initialize_from: null
+  load_model: false
+  resume: true
+  force: false
+  train_model: false
+  inference: false
+debug: false

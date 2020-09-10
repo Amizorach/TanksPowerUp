@@ -44,7 +44,7 @@ public class TanksAreaBase : MonoBehaviour
         powerUps = new List<AreaObjectInfo>();
         agents = new List<AreaObjectInfo>();
 
-        SetLevel(0);
+        SetLevel(currentLevel);
 
         InvokeRepeating("ResetObstructions", obstructionTimeOut, obstructionTimeOut);
        // Invoke("TestLevel", 60f);
