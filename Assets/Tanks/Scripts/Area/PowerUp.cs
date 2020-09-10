@@ -13,10 +13,26 @@ public class PowerUp : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         TankDriverAgent ta = other.GetComponent<TankDriverAgent>();
-        if (ta == null)
+        if (ta != null)
+        {
+            ta.OnEnergyRecharge();
+            area.ResetPowerUp(this.gameObject);
             return;
-        ta.OnEnergyRecharge();
-        area.ResetPowerUp(this.gameObject);
+        }
+        TankAgent ta1 = other.GetComponent<TankAgent>();
+        if (ta1 != null)
+        {
+            ta1.OnEnergyRecharge();
+            area.ResetPowerUp(this.gameObject);
+            return;
+        }
+        MultiBrainAgent mb = other.GetComponent<MultiBrainAgent>();
+        if (mb != null)
+        {
+            mb.OnEnergyRecharge();
+            area.ResetPowerUp(this.gameObject);
+            return;
+        }
     }
 
     public void Update()

@@ -6,19 +6,12 @@ using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Policies;
 using System;
 
-public class TankDriverAgent : BaseTankAgent
+public class TankDriverSplitAgent : SplitAgentBase
 {
     private string movementAxisName = "Vertical";
     private string turnAxisName = "Horizontal";
    
-    public override void Initialize()
-    {
-        Debug.Log("Initialize");
-        area = GetComponentInParent<TanksAreaBase> ();
-        teamId = GetComponent<BehaviorParameters>().TeamId;
-        tank = GetComponent<TankController>();
-    }
-
+   
     public int counter = 1;
 
     public void UpdateModel()
@@ -40,7 +33,12 @@ public class TankDriverAgent : BaseTankAgent
     }
 
 
+    internal override void OnEnergyRecharge()
+    {
+        stats.powerUps++;
+        PostReward(rewards.agentRewards.powerUpReward);
 
+    }
 
     protected override void HandleRewards()
     {

@@ -31,6 +31,7 @@ public class CameraControl : MonoBehaviour
     public void SetArea(TanksAreaBase ytArea)
     {
         area = ytArea;
+        targets.Clear();
         foreach (AreaObjectInfo aoi in area.agents)
         {
             targets.Add(aoi.go.transform);
@@ -148,7 +149,7 @@ public class CameraControl : MonoBehaviour
 
         foreach (Transform target in usedTargets)
         {
-            if (!target.gameObject.activeSelf)
+            if (target.gameObject == null || !target.gameObject.activeSelf)
                 continue;
 
             Vector3 targetLocalPos = transform.InverseTransformPoint(target.position);

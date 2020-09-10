@@ -337,7 +337,137 @@ MonoBehaviour:
   levels:
   - level: 0
     areaSettings:
+      fieldSize: 75
+      powerUpTriggerRadius: 2
+      obstuctPrefabs:
+      - prefab: {fileID: 4767152793931701213, guid: ef1893c74cab74efc95cb9ea7bbeb2ad,
+          type: 3}
+        count: 5
+        radius: 0
+      - prefab: {fileID: 3775320477195126863, guid: 87a995f0e09d846f5a0edc03b1c246ae,
+          type: 3}
+        count: 5
+        radius: 0
+      powerUpPrefabs:
+      - prefab: {fileID: 4106175868119291518, guid: fdff03dff115748bca87c0e951bdcfc7,
+          type: 3}
+        count: 0
+        radius: 0
+      - prefab: {fileID: 4106175868119291518, guid: 55688e9f530314d36a8dd5c6b59f0258,
+          type: 3}
+        count: 30
+        radius: 0
+      agentPrefabs:
+      - prefab: {fileID: 1866204209128388491, guid: 8099c3ba146b043a8becb422015879f9,
+          type: 3}
+        count: 20
+        radius: 2
+    tankSettings:
+      maxSpeed: 3
+      turnSpeed: 180
+      turretTurnSpeed: 60
+      energyUsage: 0.05
+      energyRecharge: 1
+      minEnergy: -1
+      maxEnergy: 5
+      maxHealth: 30
+      triggerRadius: 3
+      maxLaunchForce: 60
+      minLaunchForce: 15
+      maxChargeTime: 0.75
+      shellDamage: 0.5
+      shellCoolDownTime: 0.5
+    rewards:
+      agentRewards:
+        timeRewardFactor: 0.001
+        energyRewardFactor: 0.01
+        powerUpReward: 2
+        remainingAgetsRewardFactor: 0
+        positionRewardFactor: 5
+        damageRewardFactor: -3
+        winReward: 1
+      driverRewards:
+        collisionReward: -0.1
+        turnRewardFactor: 0
+        forwardRewardFactor: 0.001
+        distRewardFactor: 0
+      turretRewards:
+        turnRewardFactor: 0.05
+        inScopeRewardFactor: 0.1
+      shooterRewards:
+        hitRewardFactor: 1
+        hitReward: 1
+        missReward: -1
+        inactiveReward: -0.05
+        freindyHitRewardFactor: -1
+  - level: 0
+    areaSettings:
       fieldSize: 150
+      powerUpTriggerRadius: 2
+      obstuctPrefabs:
+      - prefab: {fileID: 4767152793931701213, guid: ef1893c74cab74efc95cb9ea7bbeb2ad,
+          type: 3}
+        count: 5
+        radius: 0
+      - prefab: {fileID: 3775320477195126863, guid: 87a995f0e09d846f5a0edc03b1c246ae,
+          type: 3}
+        count: 5
+        radius: 0
+      powerUpPrefabs:
+      - prefab: {fileID: 4106175868119291518, guid: fdff03dff115748bca87c0e951bdcfc7,
+          type: 3}
+        count: 0
+        radius: 0
+      - prefab: {fileID: 4106175868119291518, guid: 55688e9f530314d36a8dd5c6b59f0258,
+          type: 3}
+        count: 30
+        radius: 0
+      agentPrefabs:
+      - prefab: {fileID: 1866204209128388491, guid: 8099c3ba146b043a8becb422015879f9,
+          type: 3}
+        count: 20
+        radius: 2
+    tankSettings:
+      maxSpeed: 8
+      turnSpeed: 180
+      turretTurnSpeed: 60
+      energyUsage: 0.05
+      energyRecharge: 1
+      minEnergy: -1
+      maxEnergy: 5
+      maxHealth: 30
+      triggerRadius: 3
+      maxLaunchForce: 60
+      minLaunchForce: 15
+      maxChargeTime: 0.75
+      shellDamage: 0.5
+      shellCoolDownTime: 0.5
+    rewards:
+      agentRewards:
+        timeRewardFactor: 0.001
+        energyRewardFactor: 0.01
+        powerUpReward: 2
+        remainingAgetsRewardFactor: 0
+        positionRewardFactor: 5
+        damageRewardFactor: -3
+        winReward: 1
+      driverRewards:
+        collisionReward: -0.1
+        turnRewardFactor: 0
+        forwardRewardFactor: 0.001
+        distRewardFactor: 0
+      turretRewards:
+        turnRewardFactor: 0.05
+        inScopeRewardFactor: 0.1
+      shooterRewards:
+        hitRewardFactor: 1
+        hitReward: 1
+        missReward: -1
+        inactiveReward: -0.05
+        freindyHitRewardFactor: -1
+  - level: 2
+    areaSettings:
+      fieldSize: 200
       powerUpTriggerRadius: 2
       obstuctPrefabs:
       - prefab: {fileID: 4767152793931701213, guid: ef1893c74cab74efc95cb9ea7bbeb2ad,
@@ -346,35 +476,125 @@ MonoBehaviour:
         radius: 0
       - prefab: {fileID: 3775320477195126863, guid: 87a995f0e09d846f5a0edc03b1c246ae,
           type: 3}
-        count: 10
+        count: 15
         radius: 0
       powerUpPrefabs:
       - prefab: {fileID: 4106175868119291518, guid: fdff03dff115748bca87c0e951bdcfc7,
           type: 3}
+        count: 0
+        radius: 0
+      - prefab: {fileID: 4106175868119291518, guid: 55688e9f530314d36a8dd5c6b59f0258,
+          type: 3}
         count: 30
         radius: 0
       agentPrefabs:
-      - prefab: {fileID: 1866204209128388491, guid: 0fc5f1962066a4dc199a62bb0d03484d,
+      - prefab: {fileID: 1866204209128388491, guid: 8099c3ba146b043a8becb422015879f9,
           type: 3}
         count: 30
         radius: 2
     tankSettings:
-      maxSpeed: 20
+      maxSpeed: 18
       turnSpeed: 180
+      turretTurnSpeed: 60
+      energyUsage: 0.05
+      energyRecharge: 1
+      minEnergy: -1
+      maxEnergy: 2
+      maxHealth: 30
+      triggerRadius: 3
+      maxLaunchForce: 60
+      minLaunchForce: 15
+      maxChargeTime: 0.75
+      shellDamage: 0.5
+      shellCoolDownTime: 0.5
+    rewards:
+      agentRewards:
+        timeRewardFactor: 0.001
+        energyRewardFactor: 0.01
+        powerUpReward: 2
+        remainingAgetsRewardFactor: 0
+        positionRewardFactor: 5
+        damageRewardFactor: -3
+        winReward: 1
+      driverRewards:
+        collisionReward: -0.1
+        turnRewardFactor: 0
+        forwardRewardFactor: 0.001
+        distRewardFactor: 0
+      turretRewards:
+        turnRewardFactor: 0.05
+        inScopeRewardFactor: 0.1
+      shooterRewards:
+        hitRewardFactor: 1
+        hitReward: 1
+        missReward: -1
+        inactiveReward: -0.05
+        freindyHitRewardFactor: -1
+  - level: 3
+    areaSettings:
+      fieldSize: 150
+      powerUpTriggerRadius: 2
+      obstuctPrefabs:
+      - prefab: {fileID: 4767152793931701213, guid: ef1893c74cab74efc95cb9ea7bbeb2ad,
+          type: 3}
+        count: 50
+        radius: 0
+      - prefab: {fileID: 3775320477195126863, guid: 87a995f0e09d846f5a0edc03b1c246ae,
+          type: 3}
+        count: 50
+        radius: 0
+      powerUpPrefabs:
+      - prefab: {fileID: 4106175868119291518, guid: fdff03dff115748bca87c0e951bdcfc7,
+          type: 3}
+        count: 0
+        radius: 0
+      - prefab: {fileID: 4106175868119291518, guid: 55688e9f530314d36a8dd5c6b59f0258,
+          type: 3}
+        count: 30
+        radius: 0
+      agentPrefabs:
+      - prefab: {fileID: 1866204209128388491, guid: 8099c3ba146b043a8becb422015879f9,
+          type: 3}
+        count: 40
+        radius: 2
+    tankSettings:
+      maxSpeed: 18
+      turnSpeed: 180
+      turretTurnSpeed: 60
       energyUsage: 0.05
       energyRecharge: 1
       minEnergy: -1
       maxEnergy: 1
+      maxHealth: 30
       triggerRadius: 3
-    driverRewards:
-      collisionReward: 0
-      turnRewardFactor: 0
-      forwardRewardFactor: 0
-      distRewardFactor: 0
-      timeRefardFactor: 0
-      energyRewardFactor: 1
-      powerUpReward: 0
-      winReward: 0
+      maxLaunchForce: 60
+      minLaunchForce: 15
+      maxChargeTime: 0.75
+      shellDamage: 0.5
+      shellCoolDownTime: 0.5
+    rewards:
+      agentRewards:
+        timeRewardFactor: 0.001
+        energyRewardFactor: 0.01
+        powerUpReward: 2
+        remainingAgetsRewardFactor: 0
+        positionRewardFactor: 5
+        damageRewardFactor: -3
+        winReward: 1
+      driverRewards:
+        collisionReward: -0.1
+        turnRewardFactor: 0
+        forwardRewardFactor: 0.001
+        distRewardFactor: 0
+      turretRewards:
+        turnRewardFactor: 0.05
+        inScopeRewardFactor: 0.1
+      shooterRewards:
+        hitRewardFactor: 1
+        hitReward: 1
+        missReward: -1
+        inactiveReward: -0.05
+        freindyHitRewardFactor: -1
 --- !u!1001 &9176233665414078176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -387,10 +607,20 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 9176233665006943255, guid: dc32ae16d01ee4c039f94f316802e661,
+        type: 3}
+      propertyPath: m_TagString
+      value: wall
+      objectReference: {fileID: 0}
     - target: {fileID: 9176233665068698358, guid: dc32ae16d01ee4c039f94f316802e661,
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176233665068698358, guid: dc32ae16d01ee4c039f94f316802e661,
+        type: 3}
+      propertyPath: m_TagString
+      value: wall
       objectReference: {fileID: 0}
     - target: {fileID: 9176233665219275483, guid: dc32ae16d01ee4c039f94f316802e661,
         type: 3}
@@ -401,6 +631,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176233665704744125, guid: dc32ae16d01ee4c039f94f316802e661,
+        type: 3}
+      propertyPath: m_TagString
+      value: wall
       objectReference: {fileID: 0}
     - target: {fileID: 9176233666081495991, guid: dc32ae16d01ee4c039f94f316802e661,
         type: 3}
@@ -476,6 +711,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176233666762772368, guid: dc32ae16d01ee4c039f94f316802e661,
+        type: 3}
+      propertyPath: m_TagString
+      value: wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc32ae16d01ee4c039f94f316802e661, type: 3}

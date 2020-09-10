@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - energy
-  - agents
   - wall
+  - agent
   layers:
   - Default
   - TransparentFX
@@ -17,7 +17,7 @@ TagManager:
   - 
   - 
   - ground
-  - 
+  - Ignore shell
   - 
   - 
   - 

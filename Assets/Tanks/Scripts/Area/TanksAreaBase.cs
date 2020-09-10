@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.MLAgents;
 using UnityEngine;
 
 [RequireComponent(typeof(MLSettings))]
@@ -39,30 +40,48 @@ public class TanksAreaBase : MonoBehaviour
     {
         levels = GetComponent<MLSettings>();
         SetupGameObject();
+        obstructs = new List<AreaObjectInfo>();
+        powerUps = new List<AreaObjectInfo>();
+        agents = new List<AreaObjectInfo>();
 
         SetLevel(0);
-        ResetField();
 
         InvokeRepeating("ResetObstructions", obstructionTimeOut, obstructionTimeOut);
-    }
+       // Invoke("TestLevel", 60f);
 
+    }
+    private void TestLevel()
+    {
+        SetLevel(1);
+    }
     private void SetLevel(int level)
     {
         if (level < 0 || level >= levels.levels.Count)
             return;
         currentLevel = level;
         areaSettings = levels.levels[currentLevel].areaSettings;
+     
         SetupField();
+        ResetField();
+
     }
 
     public void ResetObstructions()
     {
+        float l = Academy.Instance.EnvironmentParameters.GetWithDefault("level", 0f);
+        Debug.Log(l);
+       
+        if (l != currentLevel)
+        {
+            SetLevel((int)l);
+            return;
+        }
         ResetAreaList(obstructs, 0f, true);
     }
 
-    internal TankDriverRewards GetDriverRewards()
+    internal MLRewards GetRewards()
     {
-        return levels.levels[currentLevel].driverRewards;
+        return levels.levels[currentLevel].rewards;
     }
 
     public void ResetPowerUp(GameObject go)
@@ -78,8 +97,8 @@ public class TanksAreaBase : MonoBehaviour
 
     internal void ResetAgent(GameObject tank)
     {
-        AreaObjectInfo aoi = agents.Find((ag) => ag.go == tank);
-        aoi.go.transform.position = FindEmptySpace(aoi.radius, 1f);
+       AreaObjectInfo aoi = agents.Find((ag) => ag.go == tank);
+       tank.transform.position = FindEmptySpace(aoi.radius, 0f);
     }
 
     private void SetupGameObject()
@@ -101,7 +120,7 @@ public class TanksAreaBase : MonoBehaviour
 
         ResetObstructions();
         ResetAreaList(powerUps, 1f, false) ;
-        ResetAreaList(agents, 1f, false);
+        ResetAreaList(agents, 0f, false);
 
     }
 
@@ -110,10 +129,9 @@ public class TanksAreaBase : MonoBehaviour
     {
         baseGround.transform.localScale = Vector3.one * (areaSettings.fieldSize /5f); //Plane length = 10
 
-        obstructs = new List<AreaObjectInfo>();
+
         SetupAreaList(areaSettings.obstuctPrefabs, obstructs, obstructionHolder.transform, "wall");
 
-        powerUps = new List<AreaObjectInfo>();
         SetupAreaList(areaSettings.powerUpPrefabs, powerUps, powerUpHolder.transform, "energy");
 
         foreach (AreaObjectInfo aoi in powerUps)
@@ -121,7 +139,6 @@ public class TanksAreaBase : MonoBehaviour
             aoi.go.GetComponent<PowerUp>().SetTriggerRadius(areaSettings.powerUpTriggerRadius);
         }
 
-        agents = new List<AreaObjectInfo>();
         SetupAreaList(areaSettings.agentPrefabs, agents, agentsHolder.transform, "agent");
 
         if (cameraControl != null)
