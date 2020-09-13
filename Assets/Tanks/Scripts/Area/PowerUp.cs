@@ -26,7 +26,7 @@ public class PowerUp : MonoBehaviour
             area.ResetPowerUp(this.gameObject);
             return;
         }
-        MultiBrainAgent mb = other.GetComponent<MultiBrainAgent>();
+        ITankAgent mb = other.GetComponent<ITankAgent>();
         if (mb != null)
         {
             mb.OnEnergyRecharge();

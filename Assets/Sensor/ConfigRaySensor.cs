@@ -208,8 +208,8 @@ public enum ConfigRayCastType
                         return;
                     case SensorInfoType.SHOOTER_SENSOR:
 
-                        buffer[bufferOffset +1] = si.moveable ? 0f : 1f;
-                        buffer[bufferOffset + 2] = si.IsEnemy(0) ? 0f : 1f;
+                        buffer[bufferOffset +1] = si.moveable ? 1f : 0f;
+                        buffer[bufferOffset + 2] = si.IsEnemy(0) ? 1f : 0f;
                         buffer[bufferOffset + 3] = si.health/100f;
 
                         return;

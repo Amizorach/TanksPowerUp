@@ -40,7 +40,7 @@ environment_parameters:
           min_lesson_length: 100
           threshold: 0
           require_reset: false
-          behavior: STurret1
+          behavior: YTDriver1
         value: 0.0
       - name: Level1 # The '-' is important as this is a list
         completion_criteria:
@@ -49,7 +49,7 @@ environment_parameters:
           min_lesson_length: 100
           threshold: 30
           require_reset: false
-          behavior: STurret1
+          behavior: YTDriver1
         value: 1.0
       - name: Level2# The '-' is important as this is a list
         value: 2.0
@@ -60,7 +60,7 @@ environment_parameters:
           min_lesson_length: 100
           threshold: 31
           require_reset: false
-          behavior: STurret1
+          behavior: YTDriver1
 
       - name: Level3 # The '-' is important as this is a list
         value: 3.0

@@ -33,7 +33,7 @@ public class TankDriverSplitAgent : SplitAgentBase
     }
 
 
-    internal override void OnEnergyRecharge()
+    public override void OnEnergyRecharge()
     {
         stats.powerUps++;
         PostReward(rewards.agentRewards.powerUpReward);

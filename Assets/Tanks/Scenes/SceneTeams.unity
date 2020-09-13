@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25a3a762f8bdb42bdbb48be1116a143c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agents: []
   baseGround: {fileID: 899462203}
   obstructionTimeOut: 100
   cameraControl: {fileID: 424948967}
@@ -358,7 +359,7 @@ MonoBehaviour:
         count: 30
         radius: 0
       agentPrefabs:
-      - prefab: {fileID: 1866204209128388491, guid: 8099c3ba146b043a8becb422015879f9,
+      - prefab: {fileID: 1866204209128388491, guid: 2674144f928334e44aa29ce9722b960e,
           type: 3}
         count: 20
         radius: 2

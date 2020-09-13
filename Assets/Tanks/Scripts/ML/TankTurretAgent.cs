@@ -21,7 +21,7 @@ public class TankTurretAgent : BaseTankAgent
     }
 
 
-    protected override void HandleRewards()
+    protected  void HandleRewards()
     {
         if (hitTank)
         {
@@ -48,7 +48,7 @@ public class TankTurretAgent : BaseTankAgent
 
     }
 
-    internal void OnHit(DamagableTarget hitObject, float damage)
+    public override void OnHit(DamagableTarget hitObject, float damage)
     {
         stats.shots++;
 

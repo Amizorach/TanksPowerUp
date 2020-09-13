@@ -6,7 +6,7 @@ using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Policies;
 using System;
 
-public abstract class BaseTankAgent : Agent
+public abstract class BaseTankAgent : Agent, ITankAgent
 {
     public MLRewards rewards;
     protected bool dead = false;
@@ -16,21 +16,14 @@ public abstract class BaseTankAgent : Agent
     protected int teamId;
     public float[] actions;
 
-    public MultiBrainAgent mAgent;
-
     //For debug
     public float reward;
 
     public override void Initialize()
     {
         Debug.Log("Initialize");
-        mAgent = GetComponentInParent<MultiBrainAgent>();
         area = GetComponentInParent<TanksAreaBase>();
-        teamId = GetComponent<BehaviorParameters>().TeamId;
         tank = GetComponent<TankController>();
-        if (tank == null)
-            tank = GetComponentInParent<TankController>();
-
         OnInitialize();
     }
 
@@ -47,7 +40,6 @@ public abstract class BaseTankAgent : Agent
         if (area.GetRewards() != null)
             rewards = area.GetRewards();
         stats = new MLStats(Academy.Instance.StatsRecorder);
-        area.ResetAgent(this.gameObject);
         tank.OnEpisodeBegin(area.GetTankSettings());
         dead = false;
     }
@@ -58,7 +50,7 @@ public abstract class BaseTankAgent : Agent
         Die();
     }
 
-    public void Die()
+    public virtual void Die()
     {
         dead = true;
         tank.Die();
@@ -76,12 +68,11 @@ public abstract class BaseTankAgent : Agent
         }
     }
 
-    protected abstract void HandleRewards();
-
-  
 
 
-    public void OnEnergyRecharge()
+
+
+    public virtual void OnEnergyRecharge()
     {
         tank.RechargeEnergy();
         stats.powerUps++;
@@ -102,22 +93,7 @@ public abstract class BaseTankAgent : Agent
     //    HandleDriverRewards();
     //}
 
-    public void AddObservationForTransform(VectorSensor sensor, Transform target)
-    {
-        //4 for flag
-        Vector3 dirToTarget = (target.position - transform.position).normalized;
-        sensor.AddObservation(
-               transform.InverseTransformDirection(dirToTarget)); // vec 3
-        Vector3 invPos = transform.InverseTransformPoint(transform.position);
-        sensor.AddObservation(invPos.x); // vec 3
-        sensor.AddObservation(invPos.z); // vec 3
-    }
 
-    public void AddTeamedObservation(VectorSensor sensor, Transform target, int team)
-    {
-        AddObservationForTransform(sensor, target);
-        sensor.AddObservation(teamId == team);
-    }
 
     public void SendStats()
     {
@@ -132,38 +108,31 @@ public abstract class BaseTankAgent : Agent
         AddReward(r);
     }
 
+    public virtual void OnHit(DamagableTarget hitObject, float damage)
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual void OnFire()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddObservationForTransform(VectorSensor sensor, Transform target)
+    {
+        //4 for flag
+        Vector3 dirToTarget = (target.position - transform.position).normalized;
+        sensor.AddObservation(
+               transform.InverseTransformDirection(dirToTarget)); // vec 3
+        Vector3 invPos = transform.InverseTransformPoint(transform.position);
+        sensor.AddObservation(invPos.x); // vec 3
+        sensor.AddObservation(invPos.z); // vec 3
+    }
+
+    public void AddTeamedObservation(VectorSensor sensor, Transform target, int team)
+    {
+        AddObservationForTransform(sensor, target);
+      //  sensor.AddObservation(mAgent.teamId == team);
+    }
 
 }
-//[System.Serializable]
-
-//public class TankDriverRewards
-//{
-//    public float collisionReward = -0.1f;
-//    public float turnRewardFactor = -0.2f;
-//    public float forwardRewardFactor = 0.5f;
-//    public float distRewardFactor = 0.01f;
-//    public float timeRefardFactor = 0.005f;
-//    public float energyRewardFactor = 1f;
-//    public float powerUpReward = 1f;
-//    public float winReward = 1f;
-//}
-
-//[System.Serializable]
-//public class TankDriverStats
-//{
-//    public int powerUps = 0;
-//    public float totalDistance = 0;
-
-//    public StatsRecorder recorder;
-//    public TankDriverStats(StatsRecorder rec)
-//    {
-//        recorder = rec;
-//    }
-
-//    internal void Send()
-//    {
-//        recorder.Add("driver/PowerUps", powerUps, StatAggregationMethod.Average);
-//        recorder.Add("driver/TotalDistance", totalDistance, StatAggregationMethod.Average);
-
-//    }
-//}

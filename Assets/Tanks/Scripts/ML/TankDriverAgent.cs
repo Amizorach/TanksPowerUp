@@ -42,7 +42,7 @@ public class TankDriverAgent : BaseTankAgent
 
 
 
-    protected override void HandleRewards()
+    protected  void HandleRewards()
     {
       
         //time

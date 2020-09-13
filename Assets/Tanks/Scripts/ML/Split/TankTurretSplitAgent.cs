@@ -49,7 +49,7 @@ public class TankTurretSplitAgent : SplitAgentBase
     }
 
 
-    internal override void OnHit(DamagableTarget hitObject, float damage)
+    public override void OnHit(DamagableTarget hitObject, float damage)
     {
 
         if (hitObject == null || damage == 0)
@@ -72,7 +72,7 @@ public class TankTurretSplitAgent : SplitAgentBase
 
     }
 
-    internal override void OnFire()
+    public override void OnFire()
     {
         stats.shots++;
         if (hitTank)

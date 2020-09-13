@@ -197,8 +197,9 @@ public class TanksAreaBase : MonoBehaviour
                     GameObject go = Instantiate(opi.prefab, parent);
                     if (vTag != null)
                         go.tag = vTag;
-                go.name = opi.prefab.name + "(" + j + ")";
+                    go.name = opi.prefab.name + "(" + j + ")";
                     AreaObjectInfo oi = new AreaObjectInfo(go, radius);
+                    //oi.OnInit()
                     oList.Add(oi);
                 }
             
@@ -229,8 +230,8 @@ public class TanksAreaBase : MonoBehaviour
 //[System.Serializable]
 //public enum YTType  { NONE, FLAG, BUILDING, AGENT };
 
-
-public struct AreaObjectInfo
+[System.Serializable]
+public class AreaObjectInfo
 {
     public GameObject go;
     public float radius;
@@ -240,15 +241,30 @@ public struct AreaObjectInfo
         this.go = go;
         this.radius = radius;
     }
+
+    public virtual void OnInit(int playerId, int teamId)
+    {
+
+    }
 }
-    [System.Serializable]
-    public struct AreaPrefabInfo
+
+//public class AreaAgentInfo : AreaObjectInfo
+//{
+
+//    public override void OnInit(int playerId, int teamId)
+//    {
+
+//    }
+//}
+
+[System.Serializable]
+    public class AreaPrefabInfo
     {
         public GameObject prefab;
         public int count;
         public float radius;
-    }
 
+    }
 
 [System.Serializable]
 public class AreaSettings

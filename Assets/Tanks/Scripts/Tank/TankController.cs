@@ -21,7 +21,7 @@ public class TankController : MonoBehaviour
     private Color color;
     public bool dead;
 
-    MultiBrainAgent agent;
+    private ITankAgent agent;
 
     private TanksAreaBase area;
     public float health = 1f;
@@ -44,7 +44,7 @@ public class TankController : MonoBehaviour
         motor = GetComponent<TankMotor>();
         turret = GetComponentInChildren<TankTurret>();
         slider = GetComponentInChildren<Slider>();
-        agent = GetComponent<MultiBrainAgent>();
+        agent = GetComponent<ITankAgent>();
         ConfigSetup(new TankSettings());
     }
 

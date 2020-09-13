@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3965a98e39ab94589b49a47251b70b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SensorName: ConfigRaySensor
+  m_SensorName: TurretRaySensor
   result: []
   m_RaysPerDirection: 0
   m_MaxRayDegrees: 0
@@ -466,16 +466,17 @@ MonoBehaviour:
       distRewardFactor: 0.01
     turretRewards:
       turnRewardFactor: 0.05
+      inScopeRewardFactor: 0.1
     shooterRewards:
       hitRewardFactor: 1
       hitReward: 1
       missReward: -0.1
       inactiveReward: -0.05
       freindyHitRewardFactor: -1
-  reward: 0
-  counter: 1
   actions: []
-  invVel: {x: 0, y: 0, z: 0}
+  reward: 0
+  hitTank: 0
+  counter: 1
 --- !u!114 &-6129505838868015739
 MonoBehaviour:
   m_ObjectHideFlags: 0

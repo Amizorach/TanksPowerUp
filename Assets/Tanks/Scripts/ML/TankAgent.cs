@@ -12,6 +12,7 @@ public class TankAgent : BaseTankAgent
     private string turnAxisName = "Horizontal";
     private string turnTurretAxisName = "Turret";
     private string fireAxisName = "Fire";
+    public bool hitTank = false;
 
 
     public int counter = 1;
@@ -24,7 +25,7 @@ public class TankAgent : BaseTankAgent
         SetModel("YTDriver" + counter, null);
     }
 
-  
+
     public void OnCollisionStay(Collision collision)
     {
         if (collision.collider.gameObject.tag == "wall")
@@ -33,6 +34,11 @@ public class TankAgent : BaseTankAgent
         }
     }
 
+    public override void Die()
+    {
+        area.ResetAgent(gameObject);
+        base.Die();
+    }
     //public void OnEnergyRecharge()
     //{
     //    tank.RechargeEnergy();
@@ -42,7 +48,7 @@ public class TankAgent : BaseTankAgent
 
 
 
-    protected override void HandleRewards()
+    protected void HandleRewards()
     {
 
         //time
@@ -63,6 +69,10 @@ public class TankAgent : BaseTankAgent
         //Distance
         PostReward(rewards.driverRewards.distRewardFactor * tank.GetSpeed() * Time.fixedDeltaTime);
 
+        if (hitTank)
+        {
+            PostReward(rewards.turretRewards.inScopeRewardFactor * Time.fixedDeltaTime);
+        }
     }
 
     public override void Heuristic(float[] actionsOut)
@@ -73,20 +83,20 @@ public class TankAgent : BaseTankAgent
         actionsOut[3] = Input.GetAxis(fireAxisName);
     }
 
-    //public override void OnActionReceived(float[] vectorAction)
-    //{
-    //    actions = vectorAction;
-    //    if (dead)
-    //        return;
-    //    tank.OnActionReceived(vectorAction[0], vectorAction[1], vectorAction[2], vectorAction[3]);
-
-    //}
-
-    public Vector3 invVel;
-
-    internal void OnHit(DamagableTarget hitObject, float damage)
+    public override void OnActionReceived(float[] vectorAction)
     {
-        stats.shots++;
+        actions = vectorAction;
+        if (dead)
+            return;
+        tank.OnActionReceived(vectorAction[0], vectorAction[1], vectorAction[2], vectorAction[3]);
+
+
+    }
+
+
+
+    public override void OnHit(DamagableTarget hitObject, float damage)
+    {
 
         if (hitObject == null || damage == 0)
         {
@@ -96,13 +106,7 @@ public class TankAgent : BaseTankAgent
         }
         stats.hit++;
         stats.totalDamage += damage;
-
-        //if (hitObject.GetComponent<TankAgent>().teamId == teamId)
-        //{
-        //    PostReward(rewards.shooterRewards.freindyHitRewardFactor * damage);
-
-        //}
-
+     
         PostReward(rewards.shooterRewards.hitRewardFactor * damage);
         PostReward(rewards.shooterRewards.hitReward);
 
@@ -111,7 +115,7 @@ public class TankAgent : BaseTankAgent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        invVel = this.transform.InverseTransformVector(tank.GetVelocity());
+        Vector3 invVel = this.transform.InverseTransformVector(tank.GetVelocity());
         sensor.AddObservation(invVel); // vec 3
         sensor.AddObservation(tank.energy);
 
@@ -119,44 +123,32 @@ public class TankAgent : BaseTankAgent
         //{
         //    AddTeamedObservation(sensor, flag.transform, flag.teamId);
         //}
+        RaycastHit hit;
+        int layerMask = ~(1 << 9);
+        hitTank = false;
+        if (Physics.Raycast(tank.fireTransform.position, tank.fireTransform.TransformDirection(Vector3.forward), out hit, 50, layerMask))
+        {
+
+            if (hit.collider.gameObject.GetComponent<DamagableTank>() != null)
+            {
+                Debug.DrawRay(tank.fireTransform.position, tank.fireTransform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+
+                hitTank = true;
+            }
+        }
+        sensor.AddObservation(hitTank);
 
         HandleRewards();
     }
 
-    
+
+    public override void OnFire()
+    {
+        stats.shots++;
+        if (hitTank)
+            PostReward(rewards.shooterRewards.hitReward);
+
+    }
 
 
 }
-//[System.Serializable]
-
-//public class TankDriverRewards
-//{
-//    public float collisionReward = -0.1f;
-//    public float turnRewardFactor = -0.2f;
-//    public float forwardRewardFactor = 0.5f;
-//    public float distRewardFactor = 0.01f;
-//    public float timeRefardFactor = 0.005f;
-//    public float energyRewardFactor = 1f;
-//    public float powerUpReward = 1f;
-//    public float winReward = 1f;
-//}
-
-//[System.Serializable]
-//public class TankDriverStats
-//{
-//    public int powerUps = 0;
-//    public float totalDistance = 0;
-
-//    public StatsRecorder recorder;
-//    public TankDriverStats(StatsRecorder rec)
-//    {
-//        recorder = rec;
-//    }
-
-//    internal void Send()
-//    {
-//        recorder.Add("driver/PowerUps", powerUps, StatAggregationMethod.Average);
-//        recorder.Add("driver/TotalDistance", totalDistance, StatAggregationMethod.Average);
-
-//    }
-//}

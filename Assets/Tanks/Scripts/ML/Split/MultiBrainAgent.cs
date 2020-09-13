@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
 
-public class MultiBrainAgent : MonoBehaviour
+public class MultiBrainAgent : MonoBehaviour, ITankAgent
 {
     public SplitAgentBase[] agents;
     public TankController tank;
@@ -196,7 +196,7 @@ public class MultiBrainAgent : MonoBehaviour
       
     }
 
-    internal void OnHit(DamagableTarget hitObject, float damage)
+    public void OnHit(DamagableTarget hitObject, float damage)
     {
 
         foreach (SplitAgentBase agent in agents)
@@ -206,7 +206,7 @@ public class MultiBrainAgent : MonoBehaviour
 
     }
 
-    internal void OnFire()
+    public void OnFire()
     {
         foreach (SplitAgentBase agent in agents)
         {
