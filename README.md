@@ -1,5 +1,7 @@
 # TanksPowerUp
 
+![](https://github.com/Amizorach/TanksPowerUp/blob/Tutorial1/media/tanks1.gif) 
+
 ML-Agent Tanks learn to drive and pick up power ups or die
 
 
