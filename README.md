@@ -9,14 +9,14 @@ The code is built in a way that allows changing many configurtaions with out eff
 
 Setup:
 * Full Project 
-  * Download Git 
+  * Download Git - Make sure you download the Tutorial1 branch 
   * Open the project 
   * Open SceneAgents 
   * Press play 
   
   
 * As Asset 
-  * Download git
+  * Download git - Make sure you download the Tutorial1 branch 
   * Open new unity package 
   * install ML agents package from PackageManager 
   * import assets under tanks into project 
