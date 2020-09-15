@@ -5,30 +5,40 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Policies;
 using System;
+using Unity.Barracuda;
 
 public class TankDriverAgent : Agent
 {
     private string movementAxisName = "Vertical";
     private string turnAxisName = "Horizontal";
-    public TankDriverRewards driverRewards;
 
     private bool dead = false;
     private TanksAreaBase area;
     private TankController tank;
-    private TankDriverStats stats;
-    private int teamId;
+    private TankDriverStats stats; //stats used to send to TensorBoard
+    private TankDriverRewards driverRewards; // reward values 
+
 
     //For debug
+    [HeaderAttribute("Debug")]
     public float reward;
 
     public override void Initialize()
     {
         Debug.Log("Initialize");
         area = GetComponentInParent<TanksAreaBase> ();
-        teamId = GetComponent<BehaviorParameters>().TeamId;
         tank = GetComponent<TankController>();
     }
 
+    public void SetModelName(String name)
+    {
+
+        GetComponent<BehaviorParameters>().BehaviorName = name;
+    }
+    internal void SetModel(NNModel model)
+    {
+        GetComponent<BehaviorParameters>().Model = model;
+    }
     public override void OnEpisodeBegin()
     {
         Debug.Log("OnEpisodeBegin");
@@ -37,34 +47,25 @@ public class TankDriverAgent : Agent
         if (stats != null)
             SendStats();
         reward = 0f;
-        if (area.GetDriverRewards() != null)
-            driverRewards = area.GetDriverRewards();
-        stats = new TankDriverStats(Academy.Instance.StatsRecorder);
+        //if (area.GetDriverRewards() != null)
+            //driverRewards = area.GetDriverRewards();
         area.ResetAgent(this.gameObject);
 
-        tank.OnEpisodeBegin(area.GetTankSettings());
+        tank.OnEpisodeBegin(null);
         stats = new TankDriverStats(Academy.Instance.StatsRecorder);
 
         dead = false;
     }
-    //public void OnTriggerEnter(Collider other)
-    //{
 
-    //    SensorInfo si = other.gameObject.GetComponent<SensorInfo>();
-    //    if (si != null)
-    //    {
-    //        //if (si.isFlag && si.teamId != teamId)
-    //        //{
-    //        //    PostReward(0.5f);
-    //        //}
+    internal void UpdateSettings(TankSettings tankSettings)
+    {
+        tank.UpdateSettings(tankSettings);
+    }
 
-    //        if (si.IsEnemy(teamId))
-    //        {
-    //            PostReward(driverRewards.hitRewardFactor);
-    //        }
-    //    }
-
-    //}
+    internal void UpdateRewards(TankDriverRewards driverRewards)
+    {
+        this.driverRewards = driverRewards;
+    }
 
     public void OnCollisionStay(Collision collision)
     {
@@ -113,7 +114,7 @@ public class TankDriverAgent : Agent
     {
       
         //time
-        PostReward(driverRewards.timeRefardFactor);
+        PostReward(driverRewards.timeRewardFactor);
 
         //Energy
         PostReward(tank.energy * driverRewards.energyRewardFactor * Time.fixedDeltaTime);
@@ -162,22 +163,22 @@ public class TankDriverAgent : Agent
         HandleDriverRewards();
     }
     
-    public void AddObservationForTransform(VectorSensor sensor, Transform target)
-    {
-        //4 for flag
-        Vector3 dirToTarget = (target.position - transform.position).normalized;
-        sensor.AddObservation(
-               transform.InverseTransformDirection(dirToTarget)); // vec 3
-        Vector3 invPos = transform.InverseTransformPoint(transform.position);
-        sensor.AddObservation(invPos.x); // vec 3
-        sensor.AddObservation(invPos.z); // vec 3
-    }
+    //public void AddObservationForTransform(VectorSensor sensor, Transform target)
+    //{
+    //    //4 for flag
+    //    Vector3 dirToTarget = (target.position - transform.position).normalized;
+    //    sensor.AddObservation(
+    //           transform.InverseTransformDirection(dirToTarget)); // vec 3
+    //    Vector3 invPos = transform.InverseTransformPoint(transform.position);
+    //    sensor.AddObservation(invPos.x); // vec 3
+    //    sensor.AddObservation(invPos.z); // vec 3
+    //}
 
-    public void AddTeamedObservation(VectorSensor sensor, Transform target, int team)
-    {
-        AddObservationForTransform(sensor, target);
-        sensor.AddObservation(teamId == team);
-    }
+    //public void AddTeamedObservation(VectorSensor sensor, Transform target, int team)
+    //{
+    //    AddObservationForTransform(sensor, target);
+    //    sensor.AddObservation(teamId == team);
+    //}
 
     public void SendStats()
     {
@@ -192,7 +193,7 @@ public class TankDriverAgent : Agent
         AddReward(r);
     }
 
-
+   
 }
 [System.Serializable]
 
@@ -202,7 +203,7 @@ public class TankDriverRewards
     public float turnRewardFactor = -0.2f;
     public float forwardRewardFactor = 0.5f;
     public float distRewardFactor = 0.01f;
-    public float timeRefardFactor = 0.005f;
+    public float timeRewardFactor = 0.005f;
     public float energyRewardFactor = 1f;
     public float powerUpReward = 1f;
     public float winReward = 1f;

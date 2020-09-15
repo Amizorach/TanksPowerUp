@@ -10,16 +10,13 @@ using UnityEngine.UI;
 public class TankController : MonoBehaviour
 {
     private TankMotor motor;
-
     private TankSettings settings;
-
     public Color baseColor;
-
     private Color color;
     public bool dead;
 
 
-    private TanksAreaBase area;
+    //private TanksAreaBase area;
     public float health = 1f;
     public float energy = 1f;
 
@@ -36,7 +33,7 @@ public class TankController : MonoBehaviour
     {
         motor = GetComponent<TankMotor>();
         slider = GetComponentInChildren<Slider>();
-        ConfigSetup(new TankSettings());
+        UpdateSettings(new TankSettings());
     }
 
     public void Start()
@@ -45,21 +42,26 @@ public class TankController : MonoBehaviour
     }
 
  
-    public void ConfigSetup(TankSettings ts)
+    public void UpdateSettings(TankSettings ts)
     {
         settings = ts;
+        motor.Setup(settings);
+        //SetBaseColor(settings.baseColor);
+
         GetComponent<SphereCollider>().radius = settings.triggerRadius;
     }
 
-    public void SetBaseColor(Color c)
-    {
-        baseColor = c;
-    }
+    //public void SetBaseColor(Color c)
+    //{
+    //    baseColor = c;
+    //}
 
     internal void ResetColor()
     {
-        SetColor(UnityEngine.Random.ColorHSV(0f, 1f, 0.5f, 1f, 1f, 1f));
-
+        if (settings.randomColor)
+            SetColor(UnityEngine.Random.ColorHSV(0f, 1f, 0.5f, 1f, 1f, 1f));
+        else
+            SetColor(settings.baseColor);
     }
 
     public void SetColor(Color c)
@@ -74,6 +76,8 @@ public class TankController : MonoBehaviour
             renderers[i].material.color = color;
         }
     }
+
+   
 
     public void FixedUpdate()
     {
@@ -113,19 +117,22 @@ public class TankController : MonoBehaviour
         slider.value = energy;//
     }
 
-
+    
     public void OnEpisodeBegin(TankSettings tankSettings)
     {
         if (tankSettings != null)
-            ConfigSetup(tankSettings);
-        gameObject.SetActive(true);
+            UpdateSettings(tankSettings);
+
         dead = false;
         energy = settings.maxEnergy;
         slider.value = energy;
         totalDistance = 0f;
         lastPosition = Vector3.zero;
-        motor.Reset();
         ResetColor();
+
+        motor.Reset();
+
+        gameObject.SetActive(true);
     }
 
     internal bool IsDead()

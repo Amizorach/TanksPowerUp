@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 0, g: 0, b: 0, a: 0}
-  dead: 0
+  dead: 1
   health: 1
   energy: 1
   currentDistance: 0
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Model: {fileID: 5022602860645237092, guid: 4ce5727ab4c7a4448b57c4548607c0b3, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: YTDriver1
+  m_BehaviorName: TDriver1
   TeamId: 0
   m_UseChildSensors: 1
 --- !u!114 &1866204209128388481
@@ -354,16 +354,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 3000
-  driverRewards:
-    collisionReward: -0.1
-    turnRewardFactor: -0.2
-    forwardRewardFactor: 0.5
-    distRewardFactor: 0.01
-    timeRefardFactor: 0.005
-    energyRewardFactor: 1
-    powerUpReward: 1
-    winReward: 1
+  MaxStep: 10000
   reward: 0
   actions: []
   invVel: {x: 0, y: 0, z: 0}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Barracuda;
 using UnityEngine;
 
 [RequireComponent(typeof(MLSettings))]
@@ -11,8 +12,8 @@ public class TanksAreaBase : MonoBehaviour
     private List<AreaObjectInfo> obstructs;
     private List<AreaObjectInfo> powerUps;
 
-    [HideInInspector]
-    public List<AreaObjectInfo> agents;
+    //[HideInInspector]
+    public List<TankDriverAgent> agents;
 
     //GroundBase for resizing the field
     public GameObject baseGround;
@@ -22,7 +23,7 @@ public class TanksAreaBase : MonoBehaviour
     //public AreaPrefabInfo[] powerUpPrefabs;
     //public AreaPrefabInfo[] agentPrefabs;
 
- 
+
     //how often to Reset the obstructions
     public float obstructionTimeOut = 100f;
 
@@ -60,10 +61,10 @@ public class TanksAreaBase : MonoBehaviour
         ResetAreaList(obstructs, 0f, true);
     }
 
-    internal TankDriverRewards GetDriverRewards()
-    {
-        return levels.levels[currentLevel].driverRewards;
-    }
+    //internal TankDriverRewards GetDriverRewards()
+    //{
+    //    return levels.levels[currentLevel].driverRewards;
+    //}
 
     public void ResetPowerUp(GameObject go)
     {
@@ -71,15 +72,15 @@ public class TanksAreaBase : MonoBehaviour
         aoi.go.transform.position = FindEmptySpace(aoi.radius, 1f);
     }
 
-    internal TankSettings GetTankSettings()
-    {
-        return levels.levels[currentLevel].tankSettings;
-    }
+    //internal TankSettings GetTankSettings()
+    //{
+    //    return levels.levels[currentLevel].tankSettings;
+    //}
 
     internal void ResetAgent(GameObject tank)
     {
-        AreaObjectInfo aoi = agents.Find((ag) => ag.go == tank);
-        aoi.go.transform.position = FindEmptySpace(aoi.radius, 1f);
+        //AreaObjectInfo aoi = agents.Find((ag) => ag.go == tank);
+        tank.transform.position = FindEmptySpace(2f, 0f);
     }
 
     private void SetupGameObject()
@@ -97,18 +98,18 @@ public class TanksAreaBase : MonoBehaviour
         //we first relocate the powerups and agents
         //the obstructs will happen in the Reset function
         RelocateAreaList(powerUps);
-        RelocateAreaList(agents);
+        RelocateAgentList();
 
         ResetObstructions();
-        ResetAreaList(powerUps, 1f, false) ;
-        ResetAreaList(agents, 1f, false);
+        ResetAreaList(powerUps, 1f, false);
+        ResetAgentList();
 
     }
 
 
     private void SetupField()
     {
-        baseGround.transform.localScale = Vector3.one * (areaSettings.fieldSize /5f); //Plane length = 10
+        baseGround.transform.localScale = Vector3.one * (areaSettings.fieldSize / 5f); //Plane length = 10
 
         obstructs = new List<AreaObjectInfo>();
         SetupAreaList(areaSettings.obstuctPrefabs, obstructs, obstructionHolder.transform, "wall");
@@ -121,9 +122,13 @@ public class TanksAreaBase : MonoBehaviour
             aoi.go.GetComponent<PowerUp>().SetTriggerRadius(areaSettings.powerUpTriggerRadius);
         }
 
-        agents = new List<AreaObjectInfo>();
-        SetupAreaList(areaSettings.agentPrefabs, agents, agentsHolder.transform, "agent");
-
+        agents = new List<TankDriverAgent>();
+        SetupAgentList();
+        //foreach (AreaObjectInfo aoi in agents)
+        //{
+        //    aoi.go.GetComponent<TankDriverAgent>
+        //    aoi.go.GetComponent<PowerUp>().SetTriggerRadius(areaSettings.powerUpTriggerRadius);
+        //}
         if (cameraControl != null)
             cameraControl.SetArea(this);
     }
@@ -133,6 +138,13 @@ public class TanksAreaBase : MonoBehaviour
         foreach (AreaObjectInfo obs in oList)
         {
             obs.go.transform.position = obs.go.transform.position + new Vector3(0f, -1000f, 0f);
+        }
+    }
+    private void RelocateAgentList()
+    {
+        foreach (TankDriverAgent agent in agents)
+        {
+            agent.transform.position = agent.transform.position + new Vector3(0f, -1000f, 0f);
         }
     }
 
@@ -151,6 +163,16 @@ public class TanksAreaBase : MonoBehaviour
         }
     }
 
+    //Repositions all object in the area list
+    private void ResetAgentList()
+    {
+        //Reposition all objects
+        foreach (TankDriverAgent agent in agents)
+        {
+            agent.transform.position = FindEmptySpace(2f, 0f);
+            agent.transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+        }
+    }
     public void SetupAreaList(AreaPrefabInfo[] pList, List<AreaObjectInfo> oList, Transform parent, string vTag)
     {
         //Clear old list
@@ -160,36 +182,70 @@ public class TanksAreaBase : MonoBehaviour
 
         for (int i = 0; i < pList.Length; i++)
         {
-            
-               
-
-                 AreaPrefabInfo opi = pList[i];
+            AreaPrefabInfo opi = pList[i];
             float radius = opi.radius;
-                //calculate radius for placement
-                if (radius <= 0f)
-                {
-                    Renderer rend = opi.prefab.GetComponent<Renderer>();
-                    if (rend != null)
-                        radius = rend.bounds.extents.magnitude;
-                    else
-                        radius = 1f;
-                }
-                for (int j = 0; j < opi.count; j++)
-                {
-                   
-                    GameObject go = Instantiate(opi.prefab, parent);
-                    if (vTag != null)
-                        go.tag = vTag;
+            //calculate radius for placement
+            if (radius <= 0f)
+            {
+                Renderer rend = opi.prefab.GetComponent<Renderer>();
+                if (rend != null)
+                    radius = rend.bounds.extents.magnitude;
+                else
+                    radius = 1f;
+            }
+            for (int j = 0; j < opi.count; j++)
+            {
+
+                GameObject go = Instantiate(opi.prefab, parent);
+                if (vTag != null)
+                    go.tag = vTag;
                 go.name = opi.prefab.name + "(" + j + ")";
-                    AreaObjectInfo oi = new AreaObjectInfo(go, radius);
-                    oList.Add(oi);
-                }
+                AreaObjectInfo oi = new AreaObjectInfo(go, radius);
+                oList.Add(oi);
+            }
+
+        }
+    }
+    public void SetupAgentList()
+    {
+
+        //Clear old list
+        foreach (TankDriverAgent agent in agents)
+            Destroy(agent.gameObject);
+        agents.Clear();
+
+        for (int i = 0; i < areaSettings.agentPrefabs.Length; i++)
+        {
+            AgentPrefabInfo opi = areaSettings.agentPrefabs[i];
             
+            for (int j = 0; j < opi.count; j++)
+            {
+                GameObject go = Instantiate(opi.prefab, agentsHolder.transform);
+           
+                 go.tag = "agent";
+                go.name = opi.prefab.name + "(" + j + ")";
+                TankDriverAgent agent = go.GetComponent<TankDriverAgent>();
+                //settings = tankSettings;
+                //rewards = driverRewards;
+                agent.UpdateSettings(opi.settings);
+                agent.UpdateRewards(opi.rewards);
+                if (opi.modelName != null)
+                {
+                    agent.SetModelName(opi.modelName);
+                }
+                if (opi.model != null)
+                {
+                    agent.SetModel(opi.model);
+                }
+              //  AgentObjectInfo oi = new AgentObjectInfo(go, opi.settings, opi.rewards);
+
+                agents.Add(agent);
+            }
+
         }
     }
 
-
-    public Vector3 FindEmptySpace(float radius, float yOffset)
+        public Vector3 FindEmptySpace(float radius, float yOffset)
     {
         int layerMask = 1 << 8;// 1 << 9;
 
@@ -212,8 +268,8 @@ public class TanksAreaBase : MonoBehaviour
 //[System.Serializable]
 //public enum YTType  { NONE, FLAG, BUILDING, AGENT };
 
-
-public struct AreaObjectInfo
+[System.Serializable]
+public class AreaObjectInfo
 {
     public GameObject go;
     public float radius;
@@ -224,13 +280,47 @@ public struct AreaObjectInfo
         this.radius = radius;
     }
 }
-    [System.Serializable]
-    public struct AreaPrefabInfo
+[System.Serializable]
+public class AgentObjectInfo 
+{
+    //public GameObject go;
+    //public TankSettings settings;
+    //public TankDriverRewards rewards;
+    public TankDriverAgent agent;
+
+    public AgentObjectInfo(GameObject go, TankSettings tankSettings, TankDriverRewards driverRewards)
     {
-        public GameObject prefab;
-        public int count;
-        public float radius;
+        //this.go = go;
+        agent = go.GetComponent<TankDriverAgent>();
+        //settings = tankSettings;
+        //rewards = driverRewards;
+        agent.UpdateSettings(tankSettings);
+        agent.UpdateRewards(driverRewards);
+
     }
+
+
+}
+
+[System.Serializable]
+public class AreaPrefabInfo
+{
+    public GameObject prefab;
+    public int count;
+    public float radius;
+}
+[System.Serializable]
+public class AgentPrefabInfo
+{
+    public GameObject prefab;
+    public int count;
+    public String modelName;
+    public NNModel model;
+    public TankSettings settings;
+    public TankDriverRewards rewards;
+   
+
+}
 
 
 [System.Serializable]
@@ -241,5 +331,5 @@ public class AreaSettings
     //Info regarding the objects to be placed in the scene
     public AreaPrefabInfo[] obstuctPrefabs;
     public AreaPrefabInfo[] powerUpPrefabs;
-    public AreaPrefabInfo[] agentPrefabs;
+    public AgentPrefabInfo[] agentPrefabs;
 }

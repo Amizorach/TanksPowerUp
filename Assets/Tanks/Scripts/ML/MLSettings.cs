@@ -12,6 +12,6 @@ public struct TLevel
 {
     public int level;
     public AreaSettings areaSettings;
-    public TankSettings tankSettings;
-    public TankDriverRewards driverRewards;
+    //public TankSettings tankSettings;
+    //public TankDriverRewards driverRewards;
 }

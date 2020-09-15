@@ -31,9 +31,9 @@ public class CameraControl : MonoBehaviour
     public void SetArea(TanksAreaBase ytArea)
     {
         area = ytArea;
-        foreach (AreaObjectInfo aoi in area.agents)
+        foreach (TankDriverAgent agent in area.agents)
         {
-            targets.Add(aoi.go.transform);
+            targets.Add(agent.transform);
 
         }
 
