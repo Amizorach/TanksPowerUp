@@ -225,12 +225,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &899462203 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9176233665219275483, guid: dc32ae16d01ee4c039f94f316802e661,
-    type: 3}
-  m_PrefabInstance: {fileID: 9176233665414078176}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1119081710
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -300,111 +294,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3b49e6462d724c64bf661722871edcb, type: 3}
---- !u!1 &1748501847 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9176233666081495991, guid: dc32ae16d01ee4c039f94f316802e661,
-    type: 3}
-  m_PrefabInstance: {fileID: 9176233665414078176}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1748501848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1748501847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25a3a762f8bdb42bdbb48be1116a143c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agents: []
-  baseGround: {fileID: 899462203}
-  obstructionTimeOut: 100
-  cameraControl: {fileID: 424948967}
-  currentLevel: 0
---- !u!114 &1748501849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1748501847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faa7ee4483a7a46cb830e4c217fbf28d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levels:
-  - level: 0
-    areaSettings:
-      fieldSize: 150
-      powerUpTriggerRadius: 2
-      obstuctPrefabs:
-      - prefab: {fileID: 4767152793931701213, guid: ef1893c74cab74efc95cb9ea7bbeb2ad,
-          type: 3}
-        count: 20
-        radius: 0
-      - prefab: {fileID: 3775320477195126863, guid: 87a995f0e09d846f5a0edc03b1c246ae,
-          type: 3}
-        count: 20
-        radius: 0
-      powerUpPrefabs:
-      - prefab: {fileID: 4106175868119291518, guid: fdff03dff115748bca87c0e951bdcfc7,
-          type: 3}
-        count: 30
-        radius: 0
-      agentPrefabs:
-      - prefab: {fileID: 1866204209128388491, guid: 0fc5f1962066a4dc199a62bb0d03484d,
-          type: 3}
-        count: 10
-        modelName: TDriver1
-        model: {fileID: 5022602860645237092, guid: 96dfdfccf34904a2aa689d0e46db9960,
-          type: 3}
-        settings:
-          maxSpeed: 12
-          turnSpeed: 180
-          energyUsage: 0.05
-          energyRecharge: 1
-          minEnergy: -1
-          maxEnergy: 1
-          triggerRadius: 1
-          baseColor: {r: 0.12771447, g: 0.26470268, b: 0.7735849, a: 1}
-          randomColor: 0
-        rewards:
-          collisionReward: 0
-          turnRewardFactor: 0
-          forwardRewardFactor: 0
-          distRewardFactor: 0
-          timeRewardFactor: 0
-          energyRewardFactor: 1
-          powerUpReward: 0
-          winReward: 0
-      - prefab: {fileID: 1866204209128388491, guid: 0fc5f1962066a4dc199a62bb0d03484d,
-          type: 3}
-        count: 10
-        modelName: TDriver2
-        model: {fileID: 5022602860645237092, guid: 51119247e8d0f401e89af5a588df1b2c,
-          type: 3}
-        settings:
-          maxSpeed: 12
-          turnSpeed: 180
-          energyUsage: 0.05
-          energyRecharge: 1
-          minEnergy: -1
-          maxEnergy: 1
-          triggerRadius: 1
-          baseColor: {r: 0.8867924, g: 0.079476655, b: 0.7385316, a: 1}
-          randomColor: 0
-        rewards:
-          collisionReward: -0.1
-          turnRewardFactor: -0.2
-          forwardRewardFactor: 0.5
-          distRewardFactor: 0.01
-          timeRewardFactor: 0.005
-          energyRewardFactor: 1
-          powerUpReward: 1
-          winReward: 1
 --- !u!1001 &9176233665414078176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -412,6 +301,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1748501848, guid: dc32ae16d01ee4c039f94f316802e661, type: 3}
+      propertyPath: cameraControl
+      value: 
+      objectReference: {fileID: 424948967}
+    - target: {fileID: 1748501849, guid: dc32ae16d01ee4c039f94f316802e661, type: 3}
+      propertyPath: levels.Array.data[0].areaSettings.agentPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748501849, guid: dc32ae16d01ee4c039f94f316802e661, type: 3}
+      propertyPath: levels.Array.data[0].areaSettings.agentPrefabs.Array.data[0].rewards.forwardRewardFactor
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748501849, guid: dc32ae16d01ee4c039f94f316802e661, type: 3}
+      propertyPath: levels.Array.data[0].areaSettings.agentPrefabs.Array.data[0].settings.randomColor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748501849, guid: dc32ae16d01ee4c039f94f316802e661, type: 3}
+      propertyPath: levels.Array.data[0].areaSettings.agentPrefabs.Array.data[0].rewards.powerUpReward
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9176233665006943255, guid: dc32ae16d01ee4c039f94f316802e661,
         type: 3}
       propertyPath: m_Layer

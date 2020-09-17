@@ -16,7 +16,7 @@ public class TankDriverAgent : Agent
     private TanksAreaBase area;
     private TankController tank;
     private TankDriverStats stats; //stats used to send to TensorBoard
-    private TankDriverRewards driverRewards; // reward values 
+    public TankDriverRewards driverRewards; // reward values 
 
 
     //For debug

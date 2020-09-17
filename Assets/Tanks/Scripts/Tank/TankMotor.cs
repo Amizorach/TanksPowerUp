@@ -37,6 +37,9 @@ public class TankMotor : MonoBehaviour
     {
         if (stopped)
             return;
+        speed = rigid.velocity.magnitude;
+        if (moveInput < 0)
+            speed *= -1;
         float turn = turnInput * turnSpeed * Time.deltaTime;
 
 
@@ -45,8 +48,7 @@ public class TankMotor : MonoBehaviour
         rigid.MoveRotation(rigid.rotation * Quaternion.Euler(0f, turn, 0f));
 
         ////aplly forward velocity
-        rigid.velocity = transform.forward * moveInput* maxSpeed;
-        speed = rigid.velocity.magnitude;
+        rigid.velocity = transform.forward * moveInput * maxSpeed;
     }
 
     internal Vector3 GetVelocity()

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class TankController : MonoBehaviour
 {
     private TankMotor motor;
-    private TankSettings settings;
+    internal TankSettings settings;
     public Color baseColor;
     private Color color;
     public bool dead;
