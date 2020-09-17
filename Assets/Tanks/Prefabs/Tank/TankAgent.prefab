@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 4780349429781584742}
   m_Layer: 0
   m_Name: TankAgent
-  m_TagString: Untagged
+  m_TagString: agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -355,6 +355,15 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 10000
+  driverRewards:
+    collisionReward: -0.1
+    turnRewardFactor: -0.2
+    forwardRewardFactor: 0.5
+    distRewardFactor: 0.01
+    timeRewardFactor: 0.005
+    energyRewardFactor: 1
+    powerUpReward: 1
+    winReward: 1
   reward: 0
   actions: []
   invVel: {x: 0, y: 0, z: 0}

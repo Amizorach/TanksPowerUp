@@ -321,6 +321,18 @@ PrefabInstance:
       propertyPath: levels.Array.data[0].areaSettings.agentPrefabs.Array.data[0].rewards.powerUpReward
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1748501849, guid: dc32ae16d01ee4c039f94f316802e661, type: 3}
+      propertyPath: levels.Array.data[0].areaSettings.agentPrefabs.Array.data[0].model
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748501849, guid: dc32ae16d01ee4c039f94f316802e661, type: 3}
+      propertyPath: levels.Array.data[0].areaSettings.agentPrefabs.Array.data[0].count
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748501849, guid: dc32ae16d01ee4c039f94f316802e661, type: 3}
+      propertyPath: levels.Array.data[0].areaSettings.fieldSize
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 9176233665006943255, guid: dc32ae16d01ee4c039f94f316802e661,
         type: 3}
       propertyPath: m_Layer
