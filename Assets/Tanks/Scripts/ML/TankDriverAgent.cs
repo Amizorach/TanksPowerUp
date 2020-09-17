@@ -126,7 +126,7 @@ public class TankDriverAgent : Agent
 
         //Speed
         if (tank.GetSpeed() > 0)
-           PostReward(driverRewards.forwardRewardFactor * tank.GetSpeed() * Time.fixedDeltaTime);
+           PostReward(driverRewards.forwardRewardFactor * (tank.GetSpeed()/tank.settings.maxSpeed) * Time.fixedDeltaTime);
 
         //Distance
         PostReward(driverRewards.distRewardFactor * tank.GetSpeed() * Time.fixedDeltaTime);
